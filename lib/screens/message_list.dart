@@ -1,13 +1,11 @@
 import 'package:SMS/widgets/message_list_item.dart';
 import 'package:flutter/material.dart';
 import '../provider/messages.dart';
-import 'package:provider/provider.dart';
 
 class MessageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final messageData = Provider.of<Messages>(context);
-    final contactnoDat = messageData.contactDist;
+    final contactnoDat = Messages().contactDist;
     print(contactnoDat.length);
 
     return Scaffold(
@@ -53,9 +51,10 @@ class MessageList extends StatelessWidget {
             delegate: SliverChildListDelegate(
               List.generate(
                 contactnoDat.length,
-                (index) => ChangeNotifierProvider.value(
-                  value: contactnoDat[index],
-                  child: MessageListItem(),
+                (index) => MessageListItem(
+                  contact: contactnoDat[index].contactNo,
+                  messageId: contactnoDat[index].messageId,
+                  messagedes: contactnoDat[index].content,
                 ),
               ),
             ),

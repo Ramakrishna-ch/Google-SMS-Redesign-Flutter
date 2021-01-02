@@ -1,7 +1,5 @@
-import 'package:SMS/provider/messages.dart';
 import 'package:flutter/material.dart';
 import './screens/message_list.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,22 +28,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (ctx) => Messages(),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: createMaterialColor(
+          Color(0xFFFFFFFF),
         ),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: createMaterialColor(
-            Color(0xFFFFFFFF),
-          ),
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: MessageList(),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      home: MessageList(),
     );
   }
 }

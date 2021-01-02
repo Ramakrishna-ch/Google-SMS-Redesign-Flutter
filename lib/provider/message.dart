@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class Message with ChangeNotifier {
+class Message {
   final String contactNo;
   final DateTime messageId;
   final String content;
