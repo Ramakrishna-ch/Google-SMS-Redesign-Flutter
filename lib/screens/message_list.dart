@@ -1,6 +1,6 @@
 import 'package:SMS/widgets/message_list_item.dart';
 import 'package:flutter/material.dart';
-import '../provider/messages.dart';
+import '../models/messages.dart';
 
 class MessageList extends StatelessWidget {
   @override
