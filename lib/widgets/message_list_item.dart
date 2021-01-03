@@ -34,11 +34,17 @@ class MessageListItem extends StatelessWidget {
         leading: Icon(
           Icons.account_circle,
           color: colors[Random().nextInt(4)],
-          size: 50,
+          size: 45,
         ),
-        title: Text(messagedata.contactNo),
+        title: Text(
+          messagedata.contactNo,
+          style: TextStyle(fontFamily: 'GoogleMedium'),
+        ),
         subtitle: Text(messagedata.content),
-        trailing: Text('${DateFormat.jm().format(messagedata.messageId)}'),
+        trailing: Text(
+          '${DateFormat.jm().format(messagedata.messageId)}',
+          style: TextStyle(color: Colors.black87, fontFamily: 'GoogleRegular'),
+        ),
       ),
     );
   }

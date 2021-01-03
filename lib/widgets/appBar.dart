@@ -3,34 +3,43 @@ import 'package:flutter/material.dart';
 class AppBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 55,
-      margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 10),
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 2.0,
-            offset: Offset(0.2, 0.2),
-            color: Colors.grey[400],
-          ),
-        ],
-        color: Colors.white,
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      elevation: 3,
+      margin: EdgeInsets.only(
+        left: 15,
+        right: 15,
+        top: 8,
       ),
-      child: Row(
-        children: <Widget>[
-          Icon(Icons.search),
-          Expanded(
-            child: Text(
-              'Search links',
-              style: TextStyle(fontSize: 17, color: Colors.black54),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 15,
+        ),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: 15),
+              child: Icon(
+                Icons.search,
+                color: Colors.black87,
+              ),
             ),
-          ),
-          Icon(
-            Icons.more_vert,
-          ),
-        ],
+            Expanded(
+              child: Text(
+                'Search links',
+                style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black54,
+                    fontFamily: 'GoogleRegular'),
+              ),
+            ),
+            Icon(
+              Icons.more_vert,
+              color: Colors.black87,
+            ),
+          ],
+        ),
       ),
     );
   }
