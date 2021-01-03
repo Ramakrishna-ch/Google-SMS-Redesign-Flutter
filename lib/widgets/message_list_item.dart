@@ -13,7 +13,7 @@ class MessageListItem extends StatelessWidget {
     Colors.yellow,
     Colors.red
   ];
-
+  final DateTime todayDate = DateTime.now();
   // final DateTime messageId;
   // final String contact;
   // final String messagedes;
@@ -22,6 +22,25 @@ class MessageListItem extends StatelessWidget {
   //   @required this.messageId,
   //   @required this.messagedes,
   // });
+
+  String dateVal(DateTime dates) {
+    if (dates.isAfter(todayDate.subtract(Duration(minutes: 60)))) {
+      return todayDate.difference(dates).inMinutes.toString() + ' Min';
+    } else if (dates.day == todayDate.day &&
+        dates.month == todayDate.month &&
+        dates.year == todayDate.year) {
+      return DateFormat.jm().format(dates).toString();
+    } else if (dates.isAfter(todayDate.subtract(Duration(days: 6)))) {
+      return DateFormat.E().format(dates).toString();
+    } else if (dates.isAfter(todayDate.subtract(Duration(days: 30)))) {
+      return DateFormat.MMMMd().format(dates).toString();
+    } else if (dates.isAfter(todayDate.subtract(Duration(days: 365)))) {
+      return DateFormat.MMMMd().format(dates).toString();
+    } else {
+      return DateFormat.yMMM().format(dates).toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final messagedata = Provider.of<Message>(context);
@@ -42,7 +61,7 @@ class MessageListItem extends StatelessWidget {
         ),
         subtitle: Text(messagedata.content),
         trailing: Text(
-          '${DateFormat.jm().format(messagedata.messageId)}',
+          dateVal(messagedata.messageId),
           style: TextStyle(color: Colors.black87, fontFamily: 'GoogleRegular'),
         ),
       ),

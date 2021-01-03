@@ -43,22 +43,22 @@ class Messages with ChangeNotifier {
     ),
     Message(
       contactNo: '8072097285',
-      messageId: DateTime.parse("2021-01-02 18:25:32"),
+      messageId: DateTime.parse("2021-01-03 22:23:32"),
       content: 'hi hello first message',
     ),
     Message(
       contactNo: '9791105054',
-      messageId: DateTime.parse("2021-01-02 18:25:32"),
+      messageId: DateTime.parse("2021-01-03 18:25:32"),
       content: 'hi hello first message',
     ),
     Message(
       contactNo: '7401526093',
-      messageId: DateTime.parse("2021-01-01 20:15:32"),
+      messageId: DateTime.parse("2019-10-03 20:15:32"),
       content: 'second message',
     ),
     Message(
       contactNo: '9840105142',
-      messageId: DateTime.parse("2020-12-29 18:25:32"),
+      messageId: DateTime.parse("2020-12-23 18:25:32"),
       content: 'hi hello first message',
     ),
     Message(
