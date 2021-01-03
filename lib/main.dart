@@ -1,7 +1,15 @@
+import 'package:SMS/models/messages.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import './screens/message_detail_screen.dart';
 import 'package:flutter/material.dart';
 import './screens/message_list.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
   runApp(MyApp());
 }
 
@@ -28,15 +36,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: createMaterialColor(
-          Color(0xFFFFFFFF),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => Messages(),
         ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: createMaterialColor(
+            Color(0xFFFFFFFF),
+          ),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: MessageList(),
+        routes: {
+          MessageDetailScreen.routeName: (ctx) => MessageDetailScreen(),
+        },
       ),
-      home: MessageList(),
     );
   }
 }

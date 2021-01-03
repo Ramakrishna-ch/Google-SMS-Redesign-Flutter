@@ -1,11 +1,13 @@
 import 'package:SMS/widgets/message_list_item.dart';
 import 'package:flutter/material.dart';
 import '../models/messages.dart';
+import 'package:provider/provider.dart';
 
 class MessageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final contactnoDat = Messages().contactDist;
+    final messagedat = Provider.of<Messages>(context);
+    final contactnoDat = messagedat.contactDist;
     print(contactnoDat.length);
 
     return Scaffold(
@@ -14,7 +16,7 @@ class MessageList extends StatelessWidget {
           SliverAppBar(
             toolbarHeight: 70,
             leadingWidth: 325,
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.white,
             floating: true,
             title: Container(
               height: 55,
@@ -51,10 +53,11 @@ class MessageList extends StatelessWidget {
             delegate: SliverChildListDelegate(
               List.generate(
                 contactnoDat.length,
-                (index) => MessageListItem(
-                  contact: contactnoDat[index].contactNo,
-                  messageId: contactnoDat[index].messageId,
-                  messagedes: contactnoDat[index].content,
+                (index) => ChangeNotifierProvider.value(
+                  value: contactnoDat[index], child: MessageListItem(),
+                  // contact: contactnoDat[index].contactNo,
+                  // messageId: contactnoDat[index].messageId,
+                  // messagedes: contactnoDat[index].content,
                 ),
               ),
             ),
