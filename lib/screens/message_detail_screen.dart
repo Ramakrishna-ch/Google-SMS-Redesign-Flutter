@@ -12,6 +12,7 @@ class MessageDetailScreen extends StatelessWidget {
     final contactdata = messageData.messages
         .where((contact) => contact.contactNo == routeArgs)
         .toList();
+    final themecolor = Theme.of(context).accentColor;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -55,12 +56,94 @@ class MessageDetailScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: contactdata.length,
-        itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
-          value: contactdata[index],
-          child: MessageDetailItem(),
-        ),
+      body: Stack(
+        children: <Widget>[
+          ListView.builder(
+            itemCount: contactdata.length,
+            itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+              value: contactdata[index],
+              child: MessageDetailItem(),
+            ),
+          ),
+          Positioned(
+              height: 55,
+              bottom: 0,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Icon(
+                        Icons.add_circle_outline,
+                        size: 30,
+                        color: themecolor,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Icon(
+                        Icons.add_photo_alternate,
+                        size: 30,
+                        color: themecolor,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 7,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(
+                            color: Colors.grey[350],
+                            width: 1.2,
+                          )),
+                      padding: EdgeInsets.only(
+                        top: 10,
+                        bottom: 10,
+                        right: 15,
+                        left: 15,
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(
+                              right: 50,
+                            ),
+                            child: Text(
+                              'Text message',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 2),
+                            child: Icon(
+                              Icons.emoji_emotions_outlined,
+                              size: 25,
+                              color: themecolor,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 2,
+                            ),
+                            child: Icon(
+                              Icons.mic_none,
+                              size: 25,
+                              color: themecolor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ))
+        ],
       ),
     );
   }

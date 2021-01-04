@@ -10,6 +10,8 @@ void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white30,
     statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.white30,
+    systemNavigationBarIconBrightness: Brightness.dark,
   ));
   runApp(MyApp());
 }
@@ -50,6 +52,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: createMaterialColor(
             Color(0xFFFFFFFF),
           ),
+          accentColor: Colors.blue[700],
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: MessageList(),
