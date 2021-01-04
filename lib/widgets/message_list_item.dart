@@ -70,7 +70,11 @@ class MessageListItem extends StatelessWidget {
       ),
       child: ListTile(
         onTap: () {
-          Navigator.pushNamed(context, MessageDetailScreen.routeName);
+          Navigator.pushNamed(
+            context,
+            MessageDetailScreen.routeName,
+            arguments: messagedata.contactNo,
+          );
         },
         leading: Icon(
           Icons.account_circle,
