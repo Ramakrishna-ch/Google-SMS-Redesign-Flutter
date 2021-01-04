@@ -41,11 +41,33 @@ class MessageListItem extends StatelessWidget {
     }
   }
 
+  Widget archiveIcon(double lefts, double rights, double tops) {
+    return Positioned(
+      left: lefts,
+      top: tops,
+      right: rights,
+      child: Icon(
+        Icons.archive_outlined,
+        color: Colors.white,
+        size: 25,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final messagedata = Provider.of<Message>(context);
     return Dismissible(
       key: ValueKey(messagedata.contactNo),
+      background: Stack(
+        children: <Widget>[
+          Container(
+            color: Colors.blue[700],
+          ),
+          archiveIcon(20, 300, 24),
+          archiveIcon(310, 27, 24),
+        ],
+      ),
       child: ListTile(
         onTap: () {
           Navigator.pushNamed(context, MessageDetailScreen.routeName);

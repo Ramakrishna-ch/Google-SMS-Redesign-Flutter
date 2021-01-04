@@ -13,7 +13,7 @@ class MessageList extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: Column(
           children: <Widget>[
             AppBarWidget(),

@@ -8,7 +8,8 @@ import './screens/message_list.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
+    statusBarColor: Colors.white30,
+    statusBarIconBrightness: Brightness.dark,
   ));
   runApp(MyApp());
 }
