@@ -6,7 +6,8 @@ Android messages app Cloned with flutter material UI, Dart packages
 
 <img src ="assets/images/1.png" height = "350" width = "180"/>        <img src ="assets/images/2.png" height = "350" width = "180"/>
 
-Main Page                       Chats Page
+Main Page                             Chats Page
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
