@@ -4,7 +4,7 @@ Android messages app Cloned with flutter material UI, Dart packages
 
 ## Screenshots
 
-<img src ="assets/images/1.png" height = "450" width = "200"/>
+<img src ="assets/images/1.png" height = "350" width = "150"/>
 
 This project is a starting point for a Flutter application.
 
