@@ -1,8 +1,10 @@
-# SMS
+# Google Messages (SMS) App - UI Redesign with flutter
 
-A new Flutter project.
+Android messages app Cloned with flutter material UI, Dart packages
 
-## Getting Started
+## Screenshots
+
+<img src ="assets/images/1.png" height = "400" width = "200"/>
 
 This project is a starting point for a Flutter application.
 
