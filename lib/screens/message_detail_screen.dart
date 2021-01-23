@@ -3,16 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/messages.dart';
 
-class MessageDetailScreen extends StatelessWidget {
+class MessageDetailScreen extends StatefulWidget {
   static const routeName = '/message-detail';
+
   @override
+  _MessageDetailScreenState createState() => _MessageDetailScreenState();
+}
+
+class _MessageDetailScreenState extends State<MessageDetailScreen> {
+  TextEditingController textMessage;
+  bool endLine = false;
+  int lines = 0;
+
+  @override
+  void initState() {
+    textMessage = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    textMessage.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
+    final mediaquery = MediaQuery.of(context);
     final routeArgs = ModalRoute.of(context).settings.arguments as String;
     final messageData = Provider.of<Messages>(context);
     final contactdata = messageData.messages
         .where((contact) => contact.contactNo == routeArgs)
         .toList();
     final themecolor = Theme.of(context).accentColor;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -56,93 +79,155 @@ class MessageDetailScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Stack(
+      body: Column(
         children: <Widget>[
-          ListView.builder(
-            itemCount: contactdata.length,
-            itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
-              value: contactdata[index],
-              child: MessageDetailItem(),
+          Expanded(
+            child: Container(
+              child: ListView.builder(
+                reverse: true,
+                itemCount: contactdata.length,
+                itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+                  value: contactdata[index],
+                  child: MessageDetailItem(),
+                ),
+              ),
             ),
           ),
-          Positioned(
-              height: 55,
-              bottom: 0,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Icon(
-                        Icons.add_circle_outline,
-                        size: 30,
-                        color: themecolor,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Icon(
-                        Icons.add_photo_alternate,
-                        size: 30,
-                        color: themecolor,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(
-                            color: Colors.grey[350],
-                            width: 1.2,
-                          )),
-                      padding: EdgeInsets.only(
-                        top: 10,
-                        bottom: 10,
-                        right: 15,
-                        left: 15,
-                      ),
-                      child: Row(
+          Container(
+            width: double.infinity,
+            color: Colors.transparent,
+            padding: EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top: 7,
+            ),
+            child: Row(
+              children: <Widget>[
+                !endLine
+                    ? Row(
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(
-                              right: 50,
-                            ),
-                            child: Text(
-                              'Text message',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 2),
+                            padding: EdgeInsets.all(5),
                             child: Icon(
-                              Icons.emoji_emotions_outlined,
-                              size: 25,
+                              Icons.add_circle_outline,
+                              size: 30,
                               color: themecolor,
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 2,
-                            ),
+                            padding: EdgeInsets.all(5),
                             child: Icon(
-                              Icons.mic_none,
-                              size: 25,
+                              Icons.add_photo_alternate,
+                              size: 30,
                               color: themecolor,
                             ),
                           ),
                         ],
+                      )
+                    : Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Icon(
+                          Icons.chevron_right,
+                        ),
                       ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(
+                          color: Colors.grey[350],
+                          width: 1.2,
+                        )),
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            child: TextField(
+                              controller: textMessage,
+                              onChanged: (text) {
+                                if (text.length >= 16) {
+                                  setState(() {
+                                    endLine = true;
+                                  });
+                                  if (text.length >= 22) {
+                                    if (text.length >= 44) {
+                                      if (text.length >= 66) {
+                                        setState(() {
+                                          lines = 3;
+                                        });
+                                        return;
+                                      }
+                                      setState(() {
+                                        lines = 2;
+                                      });
+                                      return;
+                                    }
+                                    setState(() {
+                                      lines = 1;
+                                    });
+                                    return;
+                                  }
+                                  setState(() {
+                                    lines = 0;
+                                  });
+                                  return;
+                                }
+                                setState(() {
+                                  endLine = false;
+                                  lines = 0;
+                                });
+                              },
+                              maxLines: lines + 1,
+                              keyboardType: TextInputType.multiline,
+                              decoration: InputDecoration(
+                                  hintText: 'Text Message',
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ))),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 2),
+                          child: Icon(
+                            Icons.emoji_emotions_outlined,
+                            size: 25,
+                            color: themecolor,
+                          ),
+                        ),
+                        textMessage.text.isEmpty
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 2,
+                                ),
+                                child: Icon(
+                                  Icons.mic_none,
+                                  size: 25,
+                                  color: themecolor,
+                                ),
+                              )
+                            : Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 2,
+                                ),
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.send,
+                                    size: 25,
+                                    color: themecolor,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ))
+              ],
+            ),
+          ),
         ],
       ),
     );

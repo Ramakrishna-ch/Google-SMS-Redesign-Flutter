@@ -55,6 +55,54 @@ class Messages with ChangeNotifier {
       isSend: false,
     ),
     Message(
+      contactNo: '8072097285',
+      messageId: DateTime.parse("2021-01-03 22:23:32"),
+      content: 'hi hello first message',
+      isSend: false,
+    ),
+    Message(
+      contactNo: '8072097285',
+      messageId: DateTime.parse("2021-01-03 22:23:32"),
+      content: 'hi hello first message',
+      isSend: false,
+    ),
+    Message(
+      contactNo: '8072097285',
+      messageId: DateTime.parse("2021-01-03 22:23:32"),
+      content: 'hi hello first message',
+      isSend: false,
+    ),
+    Message(
+      contactNo: '8072097285',
+      messageId: DateTime.parse("2021-01-03 22:23:32"),
+      content: 'hi hello first message',
+      isSend: false,
+    ),
+    Message(
+      contactNo: '8072097285',
+      messageId: DateTime.parse("2021-01-03 22:23:32"),
+      content: 'hi hello first message',
+      isSend: false,
+    ),
+    Message(
+      contactNo: '8072097285',
+      messageId: DateTime.parse("2021-01-03 22:23:32"),
+      content: 'hi hello first message',
+      isSend: false,
+    ),
+    Message(
+      contactNo: '8072097285',
+      messageId: DateTime.parse("2021-01-03 22:23:32"),
+      content: 'hi hello first message',
+      isSend: false,
+    ),
+    Message(
+      contactNo: '8072097285',
+      messageId: DateTime.parse("2021-01-03 22:23:32"),
+      content: 'hi hello first message',
+      isSend: false,
+    ),
+    Message(
       contactNo: '9791105054',
       messageId: DateTime.parse("2021-01-03 18:25:32"),
       content: 'hi hello first message',
@@ -87,5 +135,19 @@ class Messages with ChangeNotifier {
   List<Message> get contactDist {
     _messages.sort((a, b) => b.messageId.compareTo(a.messageId));
     return _messages.distinct((d) => d.contactNo).toList();
+  }
+
+  void _addMessage(
+      String contact, DateTime messageId, String content, bool isSend) {
+    _messages.add(Message(
+        contactNo: contact,
+        content: content,
+        messageId: messageId,
+        isSend: isSend));
+    notifyListeners();
+  }
+
+  void sendMessage(String contact, DateTime timeDat, String desc) {
+    _addMessage(contact, timeDat, desc, true);
   }
 }
