@@ -15,10 +15,6 @@ class _MessageListState extends State<MessageList> {
   bool isReceive = false;
   @override
   Widget build(BuildContext context) {
-    final messagedat = Provider.of<Messages>(context);
-    final contactnoDat = messagedat.contactDist;
-    print(contactnoDat.length);
-
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (ctx1, bool innerbool) {
@@ -29,12 +25,30 @@ class _MessageListState extends State<MessageList> {
           removeTop: true,
           child: Stack(
             children: <Widget>[
-              ListView.builder(
-                itemCount: contactnoDat.length,
-                itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
-                  value: contactnoDat[index],
-                  child: MessageListItem(),
-                ),
+              FutureBuilder(
+                future: Provider.of<Messages>(context, listen: false)
+                    .fetchMessages(),
+                builder: (ctx, futuresnap) =>
+                    futuresnap.connectionState == ConnectionState.waiting
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Consumer<Messages>(
+                            child: Center(
+                              child: Text('No messages yet, Send some!'),
+                            ),
+                            builder: (ctx, mesdat, ch) =>
+                                mesdat.messages.length <= 0
+                                    ? ch
+                                    : ListView.builder(
+                                        itemCount: mesdat.contactDist.length,
+                                        itemBuilder: (ctx, index) =>
+                                            ChangeNotifierProvider.value(
+                                          value: mesdat.contactDist[index],
+                                          child: MessageListItem(),
+                                        ),
+                                      ),
+                          ),
               ),
               Positioned(
                 bottom: 20,
@@ -57,7 +71,7 @@ class _MessageListState extends State<MessageList> {
                           right: 10,
                         ),
                         child: Icon(
-                          Icons.message,
+                          isReceive ? Icons.post_add : Icons.message,
                           color: Colors.white,
                         ),
                       ),
@@ -70,7 +84,7 @@ class _MessageListState extends State<MessageList> {
                           }
                         },
                         child: Text(
-                          'Start chat',
+                          !isReceive ? 'Start chat' : 'New',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
