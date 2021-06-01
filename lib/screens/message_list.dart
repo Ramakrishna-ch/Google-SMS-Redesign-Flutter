@@ -3,8 +3,16 @@ import '../widgets/message_list_item.dart';
 import 'package:flutter/material.dart';
 import '../models/messages.dart';
 import 'package:provider/provider.dart';
+import '../helpers/sms_receiver.dart';
+import 'package:sms_maintained/sms.dart';
 
-class MessageList extends StatelessWidget {
+class MessageList extends StatefulWidget {
+  @override
+  _MessageListState createState() => _MessageListState();
+}
+
+class _MessageListState extends State<MessageList> {
+  bool isReceive = false;
   @override
   Widget build(BuildContext context) {
     final messagedat = Provider.of<Messages>(context);
@@ -53,11 +61,20 @@ class MessageList extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      Text(
-                        'Start chat',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
+                      TextButton(
+                        onPressed: () {
+                          if (!isReceive) {
+                            SMSreceiver sms = SMSreceiver();
+                            sms.receive(context);
+                            isReceive = true;
+                          }
+                        },
+                        child: Text(
+                          'Start chat',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
                     ],

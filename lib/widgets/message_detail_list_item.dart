@@ -27,64 +27,43 @@ class MessageDetailItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               dateView(
-                  '${DateFormat.EEEE().format(messagesdat.messageId)},${DateFormat.yMMMd().format(messagesdat.messageId)} '),
+                  '${DateFormat.EEEE().format(messagesdat.messageDate)},${DateFormat.yMMMd().format(messagesdat.messageDate)} '),
               Container(
                 height: 4,
                 width: 4,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle, color: Colors.grey[700]),
               ),
-              dateView(' ${DateFormat.jm().format(messagesdat.messageId)}'),
+              dateView(' ${DateFormat.jm().format(messagesdat.messageDate)}'),
             ],
           ),
-          messagesdat.isSend
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 5),
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(176, 199, 255, 1),
-                          borderRadius: BorderRadius.circular(20)),
-                      padding: EdgeInsets.all(
-                        10,
-                      ),
-                      child: Text(
-                        messagesdat.content,
-                        style: TextStyle(
-                          color: Color.fromRGBO(17, 95, 191, 1),
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Icon(
-                      Icons.account_circle_sharp,
-                      color: Colors.purple,
-                      size: 45,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding: EdgeInsets.all(
-                        10,
-                      ),
-                      child: Text(
-                        messagesdat.content,
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
+          Row(
+            mainAxisAlignment: messagesdat.isSend
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  color: messagesdat.isSend
+                      ? Color.fromRGBO(176, 199, 255, 1)
+                      : Colors.black12,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: EdgeInsets.all(
+                  10,
+                ),
+                child: Text(
+                  messagesdat.content,
+                  style: TextStyle(
+                    color: messagesdat.isSend
+                        ? Color.fromRGBO(17, 95, 191, 1)
+                        : null,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

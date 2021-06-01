@@ -87,7 +87,7 @@ class MessageListItem extends StatelessWidget {
         ),
         subtitle: Text(messagedata.content),
         trailing: Text(
-          dateVal(messagedata.messageId),
+          dateVal(messagedata.messageDate),
           style: TextStyle(color: Colors.black87, fontFamily: 'GoogleRegular'),
         ),
       ),

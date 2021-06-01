@@ -1,6 +1,11 @@
+import 'dart:async';
+
+import 'package:SMS/helpers/sms_receiver.dart';
+import 'package:SMS/helpers/sms_sender.dart';
 import 'package:SMS/widgets/message_detail_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sms_maintained/sms.dart';
 import '../models/messages.dart';
 
 class MessageDetailScreen extends StatefulWidget {
@@ -14,6 +19,7 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
   TextEditingController textMessage;
   bool endLine = false;
   int lines = 0;
+  var mesbody = '';
 
   @override
   void initState() {
@@ -30,6 +36,7 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
   Widget build(BuildContext context) {
     final mediaquery = MediaQuery.of(context);
     final routeArgs = ModalRoute.of(context).settings.arguments as String;
+
     final messageData = Provider.of<Messages>(context);
     final contactdata = messageData.messages
         .where((contact) => contact.contactNo == routeArgs)
@@ -155,27 +162,33 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
                                       if (text.length >= 66) {
                                         setState(() {
                                           lines = 3;
+                                          mesbody = text;
                                         });
+
                                         return;
                                       }
                                       setState(() {
                                         lines = 2;
+                                        mesbody = text;
                                       });
                                       return;
                                     }
                                     setState(() {
                                       lines = 1;
+                                      mesbody = text;
                                     });
                                     return;
                                   }
                                   setState(() {
                                     lines = 0;
+                                    mesbody = text;
                                   });
                                   return;
                                 }
                                 setState(() {
                                   endLine = false;
                                   lines = 0;
+                                  mesbody = text;
                                 });
                               },
                               maxLines: lines + 1,
@@ -218,7 +231,10 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
                                     size: 25,
                                     color: themecolor,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    SMSsend send = SMSsend();
+                                    send.send(routeArgs, mesbody, context);
+                                  },
                                 ),
                               ),
                       ],
