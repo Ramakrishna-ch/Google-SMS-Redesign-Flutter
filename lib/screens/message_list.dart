@@ -1,3 +1,5 @@
+import 'package:SMS/screens/message_detail_screen.dart';
+
 import '../widgets/appBar.dart';
 import '../widgets/message_list_item.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import '../models/messages.dart';
 import 'package:provider/provider.dart';
 import '../helpers/sms_receiver.dart';
 import 'package:sms_maintained/sms.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class MessageList extends StatefulWidget {
   @override
@@ -13,6 +16,62 @@ class MessageList extends StatefulWidget {
 
 class _MessageListState extends State<MessageList> {
   bool isReceive = false;
+  var phone = '';
+
+  void alertDialog(BuildContext ctx) {
+    final textcontrol = TextEditingController();
+    var alertStyle = AlertStyle(
+      animationType: AnimationType.fromTop,
+      isCloseButton: false,
+      isOverlayTapDismiss: false,
+      descStyle: TextStyle(fontWeight: FontWeight.bold),
+      animationDuration: Duration(milliseconds: 400),
+      alertBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+          color: Colors.grey,
+        ),
+      ),
+      titleStyle: TextStyle(
+        color: Colors.red,
+      ),
+    );
+    Alert(
+      content: TextField(
+        decoration: InputDecoration(
+          labelText: 'Phone Number',
+        ),
+        controller: textcontrol,
+        onChanged: (value) {
+          setState(() {
+            phone = value;
+          });
+        },
+      ),
+      context: context,
+      title: 'New Message',
+      style: alertStyle,
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Submit",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(
+              ctx,
+              MessageDetailScreen.routeName,
+              arguments: '+91' + phone,
+            );
+          },
+          color: Color.fromRGBO(0, 179, 134, 1.0),
+          radius: BorderRadius.circular(0.0),
+        ),
+      ],
+    ).show();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +139,11 @@ class _MessageListState extends State<MessageList> {
                           if (!isReceive) {
                             SMSreceiver sms = SMSreceiver();
                             sms.receive(context);
-                            isReceive = true;
+                            setState(() {
+                              isReceive = true;
+                            });
+                          } else {
+                            alertDialog(context);
                           }
                         },
                         child: Text(

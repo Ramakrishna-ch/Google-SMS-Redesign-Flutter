@@ -4,6 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 class MessageDetailItem extends StatelessWidget {
+  String content;
+  DateTime date;
+  bool isSend;
+
+  MessageDetailItem(this.content, this.date, this.isSend);
   Widget dateView(String dateval) {
     return Text(
       dateval,
@@ -14,7 +19,6 @@ class MessageDetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final messagesdat = Provider.of<Message>(context);
     return Container(
       padding: EdgeInsets.only(
         left: 10,
@@ -27,37 +31,37 @@ class MessageDetailItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               dateView(
-                  '${DateFormat.EEEE().format(messagesdat.messageDate)},${DateFormat.yMMMd().format(messagesdat.messageDate)} '),
+                  '${DateFormat.EEEE().format(date)},${DateFormat.yMMMd().format(date)} '),
               Container(
                 height: 4,
                 width: 4,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle, color: Colors.grey[700]),
               ),
-              dateView(' ${DateFormat.jm().format(messagesdat.messageDate)}'),
+              dateView(' ${DateFormat.jm().format(date)}'),
             ],
           ),
           Row(
-            mainAxisAlignment: messagesdat.isSend
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
+            mainAxisAlignment:
+                isSend ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: <Widget>[
               Container(
+                width: content.length > 15
+                    ? MediaQuery.of(context).size.width * 0.65
+                    : null,
                 decoration: BoxDecoration(
-                  color: messagesdat.isSend
-                      ? Color.fromRGBO(176, 199, 255, 1)
-                      : Colors.black12,
+                  color: isSend
+                      ? Color.fromRGBO(211, 227, 250, 1)
+                      : Color.fromRGBO(236, 237, 239, 1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 padding: EdgeInsets.all(
                   10,
                 ),
                 child: Text(
-                  messagesdat.content,
+                  content,
                   style: TextStyle(
-                    color: messagesdat.isSend
-                        ? Color.fromRGBO(17, 95, 191, 1)
-                        : null,
+                    color: isSend ? Color.fromRGBO(17, 95, 191, 1) : null,
                     fontSize: 15,
                   ),
                 ),

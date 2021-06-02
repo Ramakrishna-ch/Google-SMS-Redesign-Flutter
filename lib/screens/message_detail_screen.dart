@@ -1,11 +1,7 @@
-import 'dart:async';
-
-import 'package:SMS/helpers/sms_receiver.dart';
 import 'package:SMS/helpers/sms_sender.dart';
 import 'package:SMS/widgets/message_detail_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sms_maintained/sms.dart';
 import '../models/messages.dart';
 
 class MessageDetailScreen extends StatefulWidget {
@@ -41,32 +37,34 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
     final contactdata = messageData.messages
         .where((contact) => contact.contactNo == routeArgs)
         .toList();
+
     final themecolor = Theme.of(context).accentColor;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
           routeArgs,
+          style: TextStyle(fontSize: 19),
         ),
         actions: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             child: Icon(
-              Icons.video_call_sharp,
+              Icons.video_call_rounded,
               size: 33,
               color: Colors.grey[800],
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 2.5),
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
             child: Icon(
-              Icons.call,
+              Icons.call_outlined,
               size: 24,
               color: Colors.grey[800],
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 2.5),
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
             child: Icon(
               Icons.search,
               size: 24,
@@ -76,7 +74,7 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
           Padding(
             padding: EdgeInsets.symmetric(
               vertical: 5,
-              horizontal: 5,
+              horizontal: 8,
             ),
             child: Icon(
               Icons.more_vert,
@@ -91,12 +89,11 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
           Expanded(
             child: Container(
               child: ListView.builder(
-                reverse: true,
                 itemCount: contactdata.length,
-                itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
-                  value: contactdata[index],
-                  child: MessageDetailItem(),
-                ),
+                itemBuilder: (ctx, index) => MessageDetailItem(
+                    contactdata[index].content,
+                    contactdata[index].messageDate,
+                    contactdata[index].isSend),
               ),
             ),
           ),
@@ -232,8 +229,13 @@ class _MessageDetailScreenState extends State<MessageDetailScreen> {
                                     color: themecolor,
                                   ),
                                   onPressed: () {
-                                    SMSsend send = SMSsend();
-                                    send.send(routeArgs, mesbody, context);
+                                    // SMSsend send = SMSsend();
+                                    // FocusScope.of(context).unfocus();
+                                    // send.send(routeArgs, mesbody, context);
+                                    // setState(() {
+                                    //   mesbody = '';
+                                    // });
+                                    print(contactdata[0].content);
                                   },
                                 ),
                               ),
